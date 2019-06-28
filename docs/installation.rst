@@ -25,11 +25,29 @@ Usage
 ~~~~~
 
 Download or clone `Ansible Keylime <https://github.com/keylime/ansible-keylime>`_
-from its repository and follow the usage section.
+from its repository and follow this usage section.
+
+Ensure you can ssh to the nodes you want to install keylime on as the user that will run tha playbook
+
+Install ansible (if not already installed::
+ 
+   sudo dnf install ansible
+
+Install prerequisite roles used in the Keylime Playbook::
+
+    ansible-galaxy install -r requirements.yml
+
+Update Ansible inventory file (/etc/ansible/hosts) to include the ip addresses of the nodes where you want on install keylime
 
 Run the example playbook against your target remote host(s)::
+    Note:: switches used in example
+        -i :: for the hosts list either in comma seperated form or name of file containing targeted host information
+        -u :: for the remote username of the nodes to install on if different from the user name running the ansible-playbook command 
+        -k :: to request interactive password input for the remote user name
+        -C :: used to check if the playbook will complete sucessfully if run (will log into node and do a mock run)
 
-    ansible-playbook -i your_hosts playbook.yml
+    ansible-playbook -i <your_hosts> -u <remote node username/userid> -k playbook.yml
+    Example :: ansible-playbook -i 10.1.0.2, -u keylimeUser -k ./playbook.yml
 
 TPM Version Control (Software TPM)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
